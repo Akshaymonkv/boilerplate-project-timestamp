@@ -24,39 +24,7 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-//for the first timestamp
-app.get("/api/:date?",(req,res)=>{
-  //converted into valid format
-  const dateString = req.params.date
-  const parsedDate = new Date(dateString)
-  //checking if unix timestamp or not
-  if(dateString.length == 13){
-    const convertedDate = new Date(parseInt(dateString))
-    //const unixParsed = new Date(convertedDate)
-    const returnData ={
-      unix: convertedDate.getTime(),
-      utc: convertedDate.toUTCString()
-    }
-      res.send(returnData)
-  }
-  //for invalid date
-else if(isNaN(parsedDate.getTime())){
-    res.json({
-      error: 'Invalid date'
-    })
-  }
-  //for normal timestamp received
-  else{
-    const returnData ={
-    unix: parsedDate.getTime(),
-    utc: parsedDate.toUTCString()
-  }
-    res.send(returnData)
-}
-}
-)
-//Could have added this in the same get method but was throwing error from freecodecdamp site so took the suggestion from thier help to create an empty get method
-//That conditional check could have been done by a ternary operator
+//API endpoint for empty URL like ""<....>/api/""
 app.get("/api/",(req,res)=>{
   const parsedDate = new Date();
   const returnData ={
@@ -64,6 +32,11 @@ app.get("/api/",(req,res)=>{
     utc: parsedDate.toUTCString()
   }
   res.send(returnData)
+})
+
+//API endpoint for date field
+app.get("/api/:date",(req, res)=>{
+  res.send("Received something")
 })
 
 // Listen on port set in environment variable or default to 3000
