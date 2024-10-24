@@ -36,8 +36,37 @@ app.get("/api/",(req,res)=>{
 
 //API endpoint for date field
 app.get("/api/:date",(req, res)=>{
-  res.send("Received something")
-})
+  const a = req.params.date
+  if(a.length == 13){
+    const unixTimestamp = new Date(parseInt(a))
+    const returnData = {
+      unix: unixTimestamp.getTime(),
+      utc: unixTimestamp.toUTCString()
+    }
+    res.send(returnData)
+  }
+  else{
+    const dateTimestamp = new Date(a)
+    console.log(dateTimestamp)
+    if (isNaN(dateTimestamp.getTime())){
+        res.json({
+          error:"Invalid date"
+        })
+      
+    }
+    else{
+      const returnData = {
+        unix: dateTimestamp.getTime(),
+        utc: dateTimestamp.toUTCString()
+      }
+      res.send(returnData)
+    }
+
+  }
+
+
+}
+)
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
