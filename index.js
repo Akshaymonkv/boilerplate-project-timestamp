@@ -36,6 +36,30 @@ app.get("/api/",(req,res)=>{
 
 //API endpoint for date field
 app.get("/api/:date",(req, res)=>{
+  /* A better loop but error handling has to be studied
+  const a = req.params.date
+  let parsedDate;
+  if(a.length == 13){
+    parsedDate = new Date(parseInt(a))
+  }
+  else{
+    parsedDate = new Date(a)
+  }
+
+  if(isNaN(parsedDate.getTime())){
+    res.json({
+      error:"Invalid date"
+    })
+  }
+
+  const returnData = {
+    unix: parsedDate.getTime(),
+    utc: parsedDate.toUTCString()
+  }
+  res.send(returnData)
+*/
+
+  
   const a = req.params.date
   if(a.length == 13){
     const unixTimestamp = new Date(parseInt(a))
