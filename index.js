@@ -26,8 +26,10 @@ app.get("/api/hello", function (req, res) {
 
 //for the first timestamp
 app.get("/api/:date?",(req,res)=>{
+  //converted into valid format
   const dateString = req.params.date
   const parsedDate = new Date(dateString)
+  //checking if unix timestamp or not
   if(dateString.length == 13){
     const convertedDate = new Date(parseInt(dateString))
     //const unixParsed = new Date(convertedDate)
@@ -37,11 +39,13 @@ app.get("/api/:date?",(req,res)=>{
     }
       res.send(returnData)
   }
+  //for invalid date
 else if(isNaN(parsedDate.getTime())){
     res.json({
       error: 'Invalid date'
     })
   }
+  //for normal timestamp received
   else{
     const returnData ={
     unix: parsedDate.getTime(),
@@ -51,7 +55,8 @@ else if(isNaN(parsedDate.getTime())){
 }
 }
 )
-
+//Could have added this in the same get method but was throwing error from freecodecdamp site so took the suggestion from thier help to create an empty get method
+//That conditional check could have been done by a ternary operator
 app.get("/api/",(req,res)=>{
   const parsedDate = new Date();
   const returnData ={
